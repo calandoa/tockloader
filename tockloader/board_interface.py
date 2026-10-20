@@ -182,6 +182,19 @@ class BoardInterface:
                 "max_size": 0x00200000,
             },
         },
+        "qemu_mps3an536": {
+            "description": "QEMU Cortex R52 virt Platform",
+            "arch": "cortex-r52",
+            "no_attribute_table": True,
+            "flash_file": {
+                # Real flash address for the QEMU Cortex R52 platform is 0x0800_0000,
+                # but ATCM with vectors start at 0x0, so do the .bin
+                "flash_address": 0x0000_0000,
+                # Size of the ROM and PROG region combined, where the resulting
+                # binary will be loaded into by QEMU:
+                "max_size": 0x0080_0000,
+            },
+        },
         "stm32f3discovery": {
             "description": "STM32F3-based Discovery Boards",
             "arch": "cortex-m4",
