@@ -1405,6 +1405,7 @@ class TockLoader:
 
                 # Get a list of all possible orderings.
                 options = itertools.product(*slices)
+
                 # See if any work.
                 for o in options:
                     if is_valid(o):
@@ -1424,25 +1425,29 @@ class TockLoader:
             slices = []
             for i, app in enumerate(apps):
                 logging.debug(f"Checking addresses for App {app.get_name()}")
+
                 apps_in_flash = app.get_fixed_addresses_flash_and_sizes()
+
                 app_slices = []
                 for starting_address, size in apps_in_flash:
                     if starting_address < address:
                         # Can't use an app below the start of apps address.
                         continue
                     # HACK! Let's assume no board has more than 2 MB of flash.
-                    if starting_address > (address + 0x200000):
-                        logging.debug(
-                            "Ignoring start address {:#x} as too large.".format(
-                                starting_address
-                            )
-                        )
-                        continue
+                    #if starting_address > (address + 0x200000):
+                    #    logging.debug(
+                    #        "Ignoring start address {:#x} as too large.".format(
+                    #            starting_address
+                    #        )
+                    #    )
+                    #    continue
 
                     logging.debug(
                         f"Considering App {app.get_name()} (flash:{starting_address:#02x} size:{size:#02x})"
                     )
+
                     app_slices.append([starting_address, size, i])
+
                 slices.append(app_slices)
 
             # See if we can find an ordering that works.
